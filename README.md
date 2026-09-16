@@ -1,13 +1,14 @@
 # tvbox-tools — TVBox「工具」配置
 
-从完整的 TVBox 配置里抽出来的一份**只含工具**的精简配置，配合 `spider.jar` 使用。
+从完整 TVBox 配置里抽出来的**只含工具**的精简配置，配合 `spider.jar` 使用。
 
 ## 内容
 
-```
-tools.json   只含 7 个工具站点的 TVBox 配置
-spider.jar   工具的实现（csp_ShellInjectTool / csp_DecryptConfig / csp_ResMgr / csp_BinMarket）
-```
+| 文件 | 说明 |
+|---|---|
+| `tools.json` | 7 个工具站点的配置，字段结构与原完整配置完全一致 |
+| `tools-min.json` | 同上，但去掉 `wallpaper` / `logo`，只保留 `spider` + `sites` —— 给内核较旧或加载异常的客户端兜底用 |
+| `spider.jar` | 工具的实现（`csp_ShellInjectTool` / `csp_DecryptConfig` / `csp_ResMgr` / `csp_BinMarket`） |
 
 ## 包含的工具
 
@@ -21,25 +22,23 @@ spider.jar   工具的实现（csp_ShellInjectTool / csp_DecryptConfig / csp_Res
 | `pushtv` | 📺 PushTV[工具] | `csp_ShellInjectTool` (`tool=filebox`) |
 | `shell` | 🐚 默壳管理[工具] | `csp_ShellInjectTool` (`tool=shell`) |
 
-原先完整配置里的影视站点、直播源、图库等**全部已剔除**。
+原完整配置里的影视站点、直播源、图库等**全部已剔除**。
 
 ## 用法
 
-把 `tools.json` 放进任意可 HTTP 访问的位置，然后在 TVBox 里作为配置地址加载。
-
-`spider.jar` 的 md5 为 `e0b6ef0e2dde0871d753d0ac25066d8c`，
-与 `tools.json` 里 `spider` 字段声明的 md5 一致 —— 这是配置能正常加载的前提。
-
-### 想让 jar 也走本仓库
-
-把 `tools.json` 里的 `spider` 换成：
+在 TVBox 里把下面任意一个地址填成「配置地址」：
 
 ```
-https://raw.githubusercontent.com/<你的用户名>/<仓库名>/main/spider.jar;md5;e0b6ef0e2dde0871d753d0ac25066d8c
+https://500ed59dc8f443dea74b25ed79db1e1e.sg2.agentos-app.run/tools.json
+https://500ed59dc8f443dea74b25ed79db1e1e.sg2.agentos-app.run/tools-min.json
+https://raw.githubusercontent.com/geuclide97/tvbox-tools/main/tools.json
 ```
+
+配置里的 `spider` 指向 `.../spider.jar`，md5 为 `e0b6ef0e2dde0871d753d0ac25066d8c`，
+与 jar 的实际内容一致 —— 这是配置能被正常加载的前提。
 
 ## 备注
 
 * `BinMarket`（环境）依赖外部清单 `https://jk.catvod.site/jk/t4/lab.json`
-* `wallpaper` 用 `proxy://do=wallpaper`，由 jar 内部实现，不需要额外文件
+* `wallpaper` 用 `proxy://do=wallpaper`，由内核自身实现，不需要额外文件
 * `logo` 是外部图片地址，可自行替换
